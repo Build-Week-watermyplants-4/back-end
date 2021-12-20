@@ -5,6 +5,7 @@ exports.up = function(knex) {
       users.increments('user_id')
       users.string('user_name', 128).notNullable().unique()
       users.string('user_password', 128).notNullable()
+      users.string('user_phone', 32).notNullable()
     })
     .createTable('plants', plants => {
       plants.increments('plant_id')
