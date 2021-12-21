@@ -1,12 +1,24 @@
+
 const router = require('express').Router()
 const User = require('./users-model')
 
-router.get('/:user_id', (req, res, next) => {
-    User.getUserById(req.params.user_id)
-    .then(resource => {
-        res.status(200).json(resource)
-    })
-    .catch(next)
+
+router.get('/', async (req, res, next) => {
+    try {
+        const users = await User.get()
+        res.json(users)
+    } catch (err) {
+        next(err)
+    }
+})
+
+router.get('/:user_id', async (req, res, next) => {
+    try {
+        const user = await User.getUserById(req.params.user_id)
+        res.json(user)
+    } catch (err) {
+        next(err)
+    }
 })
 
 router.use((err, req, res, next) => { // eslint-disable-line

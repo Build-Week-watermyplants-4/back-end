@@ -1,10 +1,20 @@
+
 const router = require('express').Router()
-const User = require('./plants-model')
+const Plant = require('./plants-model')
+
+
+router.get('/', (req, res, next) => {
+    Plant.get()
+    .then(plants => {
+        res.json(plants)
+    })
+    .catch(next)
+})
 
 router.get('/:plant_id', (req, res, next) => {
-    User.getPlantById(req.params.user_id)
-    .then(resource => {
-        res.status(200).json(resource)
+    Plant.getPlantById(req.params.plant_id)
+    .then(plant => {
+        res.status(200).json(plant)
     })
     .catch(next)
 })
