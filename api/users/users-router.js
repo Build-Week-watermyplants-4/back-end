@@ -1,5 +1,6 @@
 
 const router = require('express').Router()
+const md = require('./users-middleware')
 const User = require('./users-model')
 
 
@@ -12,13 +13,8 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.get('/:user_id', async (req, res, next) => {
-    try {
-        const user = await User.getUserById(req.params.user_id)
-        res.json(user)
-    } catch (err) {
-        next(err)
-    }
+router.get('/:user_id', md.checkAccountId, async (req, res, next) => {
+    res.json(req.user)
 })
 
 router.use((err, req, res, next) => { // eslint-disable-line
