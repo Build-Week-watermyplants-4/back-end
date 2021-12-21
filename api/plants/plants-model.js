@@ -7,11 +7,21 @@ function get() {
 }
 
 function getPlantById(plant_id) {
-    return Promise.resolve(`awesome plant with id ${plant_id}`)
+    return db('plants').where('plant_id', plant_id).first()
 }
 
-function addPlant({plant_name}) {
-    return db('plants')
+const addPlant = async plant => {
+    const [plant_id] = await db('plants').insert(plant)
+    return getPlantById(plant_id) 
 }
 
-module.exports = {get, getPlantById, addPlant}
+const updateById = async (plant_id, plant) => {
+    await db('plants').where('plant_id', plant_id).update(plant)
+    return getPlantById(plant_id)
+}
+
+const deleteById = plant_id => {
+    return db('plants').where('plant_id', plant_id).del()
+}
+
+module.exports = {get, getPlantById, addPlant, updateById, deleteById}

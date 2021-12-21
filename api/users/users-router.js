@@ -14,7 +14,12 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:user_id', md.checkUserId, async (req, res, next) => {
-    res.json(req.user)
+    try {
+        const user = await User.getUserById(req.params.user_id)
+        res.json(user)
+    } catch (err) {
+        next(err)
+    }
 })
 
 router.post('/', md.checkUserPayload, md.checkUserUnique, async (req, res, next) => {
@@ -26,9 +31,10 @@ router.post('/', md.checkUserPayload, md.checkUserUnique, async (req, res, next)
     }
 })
 
-router.put('/:user_id', md.checkUserId, md.checkUserPayload, md.checkUserUnique, (req, res, next) => {
+router.put('/:user_id', md.checkUserId, md.checkUserPayload, md.checkUserUnique, async (req, res, next) => {
     try {
-        res.json('update account')
+        const updated = await User.updateById(req.params.user_id, req.body)
+        res.json(updated)
     } catch (err) {
         next(err)
     }

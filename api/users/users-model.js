@@ -15,8 +15,9 @@ const addUser = async user => {
     return getUserById(user_id) 
 }
 
-const updateById = (user_id, user) => {
-    //
+const updateById = async (user_id, user) => {
+    await db('users').where('user_id', user_id).update(user)
+    return getUserById(user_id)
 }
 
 const deleteById = user_id => {
