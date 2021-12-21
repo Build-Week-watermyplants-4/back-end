@@ -1,5 +1,17 @@
-function getUserById(user_id) {
-    return Promise.resolve(`awesome user with id ${user_id}`)
+
+const db = require('../../data/db-config')
+
+
+function get() {
+    return db('users')
 }
 
-module.exports = {getUserById}
+function getUserById(user_id) {
+    return db('users').where('user_id', user_id).first()
+}
+
+function addUser({username, password}) {
+    return db('users')
+}
+
+module.exports = {get, getUserById, addUser}
