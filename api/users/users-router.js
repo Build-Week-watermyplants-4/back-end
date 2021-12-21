@@ -14,13 +14,36 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:user_id', md.checkUserId, async (req, res, next) => {
-    res.json(req.user)
+    try {
+        const user = await User.getUserById(req.params.user_id)
+        res.json(user)
+    } catch (err) {
+        next(err)
+    }
 })
 
 router.post('/', md.checkUserPayload, md.checkUserUnique, async (req, res, next) => {
     try {
         const newUser = await User.addUser(req.body)
         res.status(201).json(newUser)
+    } catch (err) {
+        next(err)
+    }
+})
+
+router.put('/:user_id', md.checkUserId, md.checkUserPayload, md.checkUserUnique, async (req, res, next) => {
+    try {
+        const updated = await User.updateById(req.params.user_id, req.body)
+        res.json(updated)
+    } catch (err) {
+        next(err)
+    }
+})
+
+router.delete('/:user_id', md.checkUserId, async (req, res, next) => {
+    try {
+        await User.deleteById(req.params.user_id)
+        res.json(req.user)
     } catch (err) {
         next(err)
     }
