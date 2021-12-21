@@ -17,9 +17,10 @@ router.get('/:user_id', md.checkUserId, async (req, res, next) => {
     res.json(req.user)
 })
 
-router.post('/', md.checkUserPayload, async (req, res, next) => {
+router.post('/', md.checkUserPayload, md.checkUserUnique, async (req, res, next) => {
     try {
-        res.json('post user')
+        const newUser = await User.addUser(req.body)
+        res.status(201).json(newUser)
     } catch (err) {
         next(err)
     }
@@ -27,7 +28,6 @@ router.post('/', md.checkUserPayload, async (req, res, next) => {
 
 router.use((err, req, res, next) => { // eslint-disable-line
     res.status(500).json({
-        customMessage: 'something went wrong inside the users router',
         message: err.message,
         stack: err.stack
     })
