@@ -15,4 +15,12 @@ const addUser = async user => {
     return getUserById(user_id) 
 }
 
-module.exports = {get, getUserById, addUser}
+const updateById = (user_id, user) => {
+    //
+}
+
+const deleteById = user_id => {
+    return db('users').where('user_id', user_id).del()
+}
+
+module.exports = {get, getUserById, addUser, updateById, deleteById}

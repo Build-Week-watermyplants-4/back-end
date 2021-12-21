@@ -26,6 +26,23 @@ router.post('/', md.checkUserPayload, md.checkUserUnique, async (req, res, next)
     }
 })
 
+router.put('/:user_id', md.checkUserId, md.checkUserPayload, md.checkUserUnique, (req, res, next) => {
+    try {
+        res.json('update account')
+    } catch (err) {
+        next(err)
+    }
+})
+
+router.delete('/:user_id', md.checkUserId, async (req, res, next) => {
+    try {
+        await User.deleteById(req.params.user_id)
+        res.json(req.user)
+    } catch (err) {
+        next(err)
+    }
+})
+
 router.use((err, req, res, next) => { // eslint-disable-line
     res.status(500).json({
         message: err.message,
