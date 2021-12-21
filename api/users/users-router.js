@@ -13,8 +13,16 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.get('/:user_id', md.checkAccountId, async (req, res, next) => {
+router.get('/:user_id', md.checkUserId, async (req, res, next) => {
     res.json(req.user)
+})
+
+router.post('/', md.checkUserPayload, async (req, res, next) => {
+    try {
+        res.json('post user')
+    } catch (err) {
+        next(err)
+    }
 })
 
 router.use((err, req, res, next) => { // eslint-disable-line
