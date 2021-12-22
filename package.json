@@ -8,10 +8,16 @@
     "server": "nodemon index.js",
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
-    "reset": "npm run rollback && npm run migrate && npm run seed",
-    "cleanup": "knex seed:run --specific=01-cleanup.js",
     "seed": "knex seed:run",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "migrateh": "heroku run knex migrate:latest -a YOUR_HEROKU_APP_NAME",
+    "rollbackh": "heroku run knex migrate:rollback -a YOUR_HEROKU_APP_NAME",
+    "databaseh": "heroku pg:psql -a YOUR_HEROKU_APP_NAME",
+    "seedh": "heroku run knex seed:run -a YOUR_HEROKU_APP_NAME",
+    "test": "cross-env NODE_ENV=testing jest --verbose --runInBand",
+    "deploy": "git push heroku main"
+  },
+  "engines": {
+    "node": "16.13.1"
   },
   "repository": {
     "type": "git",
@@ -40,6 +46,6 @@
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.14",
-    "sqlite3": "^5.0.2"
+    "pg": "^8.7.1"
   }
 }
