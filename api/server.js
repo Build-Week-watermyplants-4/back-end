@@ -16,7 +16,7 @@ server.use('/api/users', usersRouter)
 server.use('/api/plants', plantsRouter)
 
 server.use('*', (req, res) => {
-    res.json({api: 'up'})
+    res.json(`<h1>Hello, there!<h1>`)
 })
 
 module.exports = server
