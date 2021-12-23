@@ -22,7 +22,7 @@ router.get('/:user_id', md.checkUserId, async (req, res, next) => {
     }
 })
 
-router.post('/signup', md.checkUserPayload, md.checkUserUnique, async (req, res, next) => {
+router.post('/', md.checkUserPayload, md.checkUserUnique, async (req, res, next) => {
     try {
         const newUser = await User.addUser(req.body)
         res.status(201).json(newUser)

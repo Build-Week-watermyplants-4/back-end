@@ -11,10 +11,10 @@ function getUserById(user_id) {
 }
 
 const addUser = async user => {
-    const createUser = await db('users')
+    const [createUser] = await db('users')
     .returning(['user_id', 'user_name', 'user_password', 'user_tel'])
     .insert(user)
-    return createUser 
+    return createUser
 }
 
 const updateById = async (user_id, user) => {
