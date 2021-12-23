@@ -15,8 +15,11 @@ server.use(cors())
 server.use('/api/users', usersRouter)
 server.use('/api/plants', plantsRouter)
 
-server.use('*', (req, res) => {
-    res.json(`<h1>Hello, there!<h1>`)
-})
+erver.use((err, req, res, next) => { // eslint-disable-line
+    res.status(err.status || 500).json({
+      message: err.message,
+      stack: err.stack,
+    });
+  });
 
 module.exports = server
