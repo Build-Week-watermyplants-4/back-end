@@ -20,7 +20,7 @@ exports.checkUserPayload = (req, res, next) => {
     const error = {status: 400}
     const {user_name, user_password, user_tel} = req.body
     if (user_name === undefined || user_password === undefined || user_tel === undefined) {
-        error.message = 'name and password are required'
+        error.message = 'name and password and phone number are required'
         next(error)
     } else if (typeof user_name !== 'string') {
         error.message = 'name of account must be a string'
